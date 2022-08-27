@@ -1,16 +1,13 @@
 import React from 'react';
-import { ThemeProvider } from '@emotion/react';
 import { nanoid } from 'nanoid';
 import { useState, useEffect } from 'react';
 import { MessageList } from '../MessageList/MessageList';
 import { Message } from '../shared/message';
 import { User } from '../shared/user';
 import { UserList } from '../UserList/UserList';
-import createTheme from '@material-ui/core/styles/createTheme';
 import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
 import { useParams } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../store/store';
 import {
@@ -19,14 +16,6 @@ import {
   botAnswer,
   deleteUserSlice,
 } from '../../store/chats/chatSlice';
-
-const theme = createTheme({
-  palette: {
-    background: {
-      default: '#6f5eb8',
-    },
-  },
-});
 
 export function Chat() {
   const [message, setMessage] = useState<string>('');
@@ -79,31 +68,28 @@ export function Chat() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="board">
-          <div className="board__item-chats">
-            <UserList deleteUser={deleteUser} userList={chat} />
-            <Input setField={setUserAdded} />)
-            <Button disabled={userAdded.length === 0} addField={addUser}>
-              Add User
-            </Button>
-          </div>
-          {userFinded.name && (
-            <div className="board__item-messages">
-              <MessageList messageList={userFinded.messages} />
-              <label>
-                <form action="#">
-                  <Input setField={setMessage} />
-                  <Button disabled={message.length === 0} addField={addMessage}>
-                    Add Message
-                  </Button>
-                </form>
-              </label>
-            </div>
-          )}
+      <div className="board">
+        <div className="board__item-chats">
+          <UserList deleteUser={deleteUser} userList={chat} />
+          <Input setField={setUserAdded} />)
+          <Button disabled={userAdded.length === 0} addField={addUser}>
+            Add User
+          </Button>
         </div>
-      </ThemeProvider>
+        {userFinded.name && (
+          <div className="board__item-messages">
+            <MessageList messageList={userFinded.messages} />
+            <label>
+              <form action="#">
+                <Input setField={setMessage} />
+                <Button disabled={message.length === 0} addField={addMessage}>
+                  Add Message
+                </Button>
+              </form>
+            </label>
+          </div>
+        )}
+      </div>
     </>
   );
 }

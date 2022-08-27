@@ -6,6 +6,7 @@ import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
 import { authUser } from '../../store/profile/profileSlice';
 import { Checkbox } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export function Profile() {
   const isAuth = useSelector((state: StoreState) => state.profile.auth.isAuth);
@@ -34,6 +35,7 @@ export function Profile() {
           {isAuth ? 'Log out' : 'Log in'}
         </Button>
       </form>
+      <Link to="/signUp">sign up</Link>
     </>
   );
 }

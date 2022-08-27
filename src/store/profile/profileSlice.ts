@@ -1,4 +1,5 @@
 import { createSlice, Slice } from '@reduxjs/toolkit';
+import { RegisteredUser } from '../../components/shared/user';
 
 export interface ProfileState {
   check: boolean;
@@ -20,6 +21,7 @@ export interface AuthPayload {
 export interface ProfileAction {
   changeCheck: () => void;
   authUser: () => void;
+  signInUser: () => void;
 }
 
 export const profileSlice: Slice<ProfileState> = createSlice({
@@ -27,7 +29,7 @@ export const profileSlice: Slice<ProfileState> = createSlice({
   initialState: {
     check: true,
     auth: {
-      isAuth: false,
+      isAuth: true || false,
       login: '',
       password: '',
     },

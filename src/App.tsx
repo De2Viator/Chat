@@ -24,6 +24,12 @@ const Home = lazy(() =>
   }))
 );
 
+const SignUp = lazy(() =>
+  import('./components/SignUp/SignUp').then((module) => ({
+    default: module.SignUp,
+  }))
+);
+
 function App() {
   return (
     <Provider store={store}>
@@ -38,6 +44,7 @@ function App() {
                   <Route path=":id" />
                 </Route>
               </Route>
+              <Route path="signUp" element={<SignUp />} />
             </Route>
           </Routes>
         </Suspense>

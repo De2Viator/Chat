@@ -9,6 +9,7 @@ export const Input: FC<Props> = memo(function Input(props: Props) {
   return (
     <TextField
       autoFocus
+      size="small"
       onChange={(e) => props.setField(e.target.value)}
       data-testid="inputName"
       id="outlined-basic"
