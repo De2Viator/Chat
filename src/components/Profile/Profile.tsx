@@ -12,21 +12,21 @@ export function Profile() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch();
-  const signInToStore = () => {
+  const signIn = () => {
     const payload = {
       email,
       password,
     };
     dispatch<any>(signIn());
   };
-  const createUserToStore = () => {
+  const signUp = () => {
     const payload = {
       email,
       password,
     };
     dispatch<any>(createUser());
   };
-  const signOutToStore = () => {
+  const signOut = () => {
     dispatch<any>(signOut());
   };
   return (
@@ -39,21 +39,21 @@ export function Profile() {
         <Input setField={setPassword}></Input>
         {isAuth ? (
           <Button
-            addField={signOutToStore}
+            addField={signOut}
             disabled={!((email !== '' && password !== '') || isAuth === true)}
           >
             Sign Out
           </Button>
         ) : (
           <Button
-            addField={signInToStore}
+            addField={signIn}
             disabled={!((email !== '' && password !== '') || isAuth === false)}
           >
             Sign In
           </Button>
         )}
         <Button
-          addField={createUserToStore}
+          addField={signUp}
           disabled={!((email !== '' && password !== '') || isAuth === true)}
         >
           Create
