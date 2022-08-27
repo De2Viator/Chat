@@ -35,7 +35,7 @@ export const getRedditSlice = createAsyncThunk('GET_NEWS', async () => {
 export const homeSlice: Slice<HomeState> = createSlice({
   name: 'HOME',
   initialState: {
-    reddit: [],
+    reddit: [] as RedditUser[],
   },
   reducers: {},
   extraReducers: (builder) => {

@@ -1,10 +1,4 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import {
-  createUserFirebase,
-  signInFirebase,
-  signOutFirebase,
-  User,
-} from '../../cloudStore/firebase';
 
 export interface ProfileState {
   check: boolean;
@@ -27,49 +21,24 @@ export interface ProfileAction {
   changeCheck: () => void;
 }
 
-export const createUser = createAsyncThunk(
-  'CREATE_USER_FIREBASE',
-  async (user: User) => {
-    let response = {};
-    try {
-      response = await createUserFirebase(user);
-    } catch (err) {
-      throw new Error(err);
-    }
-    const payload = {
-      response,
-    };
-    return payload;
-  }
-);
+export const createUser = createAsyncThunk('CREATE_USER_FIREBASE', async () => {
+  //
+});
 
-export const signIn = createAsyncThunk('SIGN_IN_USER', async (user: User) => {
-  let response = {};
-  try {
-    response = await signInFirebase(user);
-  } catch (err) {
-    throw new Error(err);
-  }
-  const payload = {
-    response,
-  };
-  return payload;
+export const signIn = createAsyncThunk('SIGN_IN_USER', async () => {
+  //
 });
 
 export const signOut = createAsyncThunk('SIGN_OUT_USER', async () => {
-  try {
-    await signOutFirebase();
-  } catch (err) {
-    throw new Error(err);
-  }
+  //
 });
 
 export const profileSlice: Slice<ProfileState> = createSlice({
   name: 'PROFILE',
   initialState: {
-    check: true,
+    check: true as boolean,
     auth: {
-      isAuth: false,
+      isAuth: false as boolean,
       login: '',
       password: '',
     },
@@ -79,7 +48,7 @@ export const profileSlice: Slice<ProfileState> = createSlice({
       state.check = !state.check;
     },
     signOut() {
-      signOutFirebase();
+      //
     },
   },
   extraReducers: (builder) => {
@@ -87,11 +56,7 @@ export const profileSlice: Slice<ProfileState> = createSlice({
       console.log('User created');
     });
     builder.addCase(signIn.fulfilled, (state, action) => {
-      if (action.payload.response['user']) {
-        state.auth.isAuth = true;
-      } else {
-        state.auth.isAuth = false;
-      }
+      //
     });
     builder.addCase(signOut.fulfilled, (state) => {
       state.auth.isAuth = false;

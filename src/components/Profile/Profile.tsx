@@ -17,14 +17,14 @@ export function Profile() {
       email,
       password,
     };
-    dispatch<any>(signIn(payload));
+    dispatch<any>(signIn());
   };
   const createUserToStore = () => {
     const payload = {
       email,
       password,
     };
-    dispatch<any>(createUser(payload));
+    dispatch<any>(createUser());
   };
   const signOutToStore = () => {
     dispatch<any>(signOut());
@@ -47,7 +47,7 @@ export function Profile() {
         ) : (
           <Button
             addField={signInToStore}
-            disabled={!((email !== '' && password !== '') || isAuth === true)}
+            disabled={!((email !== '' && password !== '') || isAuth === false)}
           >
             Sign In
           </Button>
