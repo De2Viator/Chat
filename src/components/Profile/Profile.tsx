@@ -4,20 +4,30 @@ import { StoreState } from '../../store/store';
 export { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
-import { authUser } from '../../store/profile/profileSlice';
+import { createUser, signIn, signOut } from '../../store/profile/profileSlice';
 import { Checkbox } from '@mui/material';
 
 export function Profile() {
   const isAuth = useSelector((state: StoreState) => state.profile.auth.isAuth);
-  const [login, setLogin] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch();
-  const sendAuth = () => {
+  const signInToStore = () => {
     const payload = {
-      login,
+      email,
       password,
     };
-    dispatch(authUser(payload));
+    dispatch<any>(signIn(payload));
+  };
+  const createUserToStore = () => {
+    const payload = {
+      email,
+      password,
+    };
+    dispatch<any>(createUser(payload));
+  };
+  const signOutToStore = () => {
+    dispatch<any>(signOut());
   };
   return (
     <>
@@ -25,13 +35,28 @@ export function Profile() {
       Loginned:
       <Checkbox checked={isAuth} defaultChecked />
       <form style={{ width: '400px' }}>
-        <Input setField={setLogin}></Input>
+        <Input setField={setEmail}></Input>
         <Input setField={setPassword}></Input>
+        {isAuth ? (
+          <Button
+            addField={signOutToStore}
+            disabled={!((email !== '' && password !== '') || isAuth === true)}
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <Button
+            addField={signInToStore}
+            disabled={!((email !== '' && password !== '') || isAuth === true)}
+          >
+            Sign In
+          </Button>
+        )}
         <Button
-          addField={sendAuth}
-          disabled={!((login !== '' && password !== '') || isAuth === true)}
+          addField={createUserToStore}
+          disabled={!((email !== '' && password !== '') || isAuth === true)}
         >
-          {isAuth ? 'Log out' : 'Log in'}
+          Create
         </Button>
       </form>
     </>

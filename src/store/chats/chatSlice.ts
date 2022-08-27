@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
+import { onValue } from 'firebase/database';
 import { nanoid } from 'nanoid';
+import {
+  addChatFirebase,
+  addMessagesFirebase,
+  deleteChatFirebase,
+  userRef,
+} from '../../cloudStore/firebase';
 import { Message } from '../../components/shared/message';
 import { User } from '../../components/shared/user';
 
@@ -40,66 +47,73 @@ export const botAnswer = createAsyncThunk('BOT_ANSWER', async (user: User) => {
   );
   const payload = {
     user,
-    bot,
+    message: bot,
+  };
+  await addMessagesFirebase(payload);
+});
+
+export const addChat = createAsyncThunk('CHAT_ADD', async (name: string) => {
+  const chat = {
+    name,
+    messages: [],
+    id: nanoid(),
+  };
+  await addChatFirebase(chat);
+  const payload = {
+    user: chat,
   };
   return payload;
 });
 
+export const addMessage = createAsyncThunk(
+  'MESSAGE_ADD',
+  async (data: { user: User; message: Message }) => {
+    await addMessagesFirebase(data);
+  }
+);
+
+export const initialUsers = createAsyncThunk(
+  'INITIAL_USER',
+  (data, { dispatch }) => {
+    onValue(userRef, (snapshot) => {
+      dispatch(getUsers(snapshot.val()));
+    });
+  }
+);
+
+export const deleteChat = createAsyncThunk(
+  'CHAT_DELETE',
+  async (id: string) => {
+    await deleteChatFirebase(id);
+  }
+);
+
 export const chatSlice: Slice<ChatState> = createSlice({
   name: 'CHAT',
   initialState: {
-    users: [
-      {
-        name: 'Charlie',
-        id: nanoid(),
-        messages: [
-          {
-            name: 'Charlie',
-            message: 'Hello, user!',
-            id: nanoid(),
-          },
-        ],
-      },
-      {
-        name: 'Chloe',
-        id: nanoid(),
-        messages: [
-          {
-            name: 'Chloe',
-            message: 'Hello, user!',
-            id: nanoid(),
-          },
-        ],
-      },
-    ],
+    users: {},
   },
   reducers: {
-    addMessageSlice(state, action: ChatPayload) {
-      const us = state.users.find((el) => el.id === action.payload.user.id);
-      state.users[state.users.indexOf(us)].messages.push(
-        action.payload.message
-      );
-    },
-    deleteUserSlice(state, action: ChatPayload) {
-      state.users.splice(state.users.indexOf(action.payload.user), 1);
-    },
-    addUserSlice(state, action: ChatPayload) {
-      state.users.push({
-        name: action.payload.userName,
-        id: nanoid(),
-        messages: [],
-      });
+    getUsers(state, action) {
+      console.log(action.payload);
+      state.users = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(botAnswer.fulfilled, (state, action: BotPayload) => {
-      const us = state.users.find((el) => el.id === action.payload.user.id);
-      state.users[state.users.indexOf(us)].messages.push(action.payload.bot);
-      return state;
+    builder.addCase(botAnswer.fulfilled, () => {
+      console.log('bot answered');
+    });
+    builder.addCase(addChat.fulfilled, () => {
+      console.log('chat created');
+    });
+    builder.addCase(deleteChat.fulfilled, () => {
+      console.log('chat deleted');
+    });
+    builder.addCase(addMessage.fulfilled, () => {
+      console.log('add message');
     });
   },
 });
 
-export const { addMessageSlice, deleteUserSlice, addUserSlice, addBotMessage } =
-  chatSlice.actions;
+export const { getUsers } = chatSlice.actions;
 export default chatSlice.reducer;

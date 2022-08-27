@@ -1,4 +1,10 @@
-import { createSlice, Slice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
+import {
+  createUserFirebase,
+  signInFirebase,
+  signOutFirebase,
+  User,
+} from '../../cloudStore/firebase';
 
 export interface ProfileState {
   check: boolean;
@@ -13,14 +19,50 @@ export interface Auth {
 
 export interface AuthPayload {
   payload: {
-    login: string;
+    email: string;
     password: string;
   };
 }
 export interface ProfileAction {
   changeCheck: () => void;
-  authUser: () => void;
 }
+
+export const createUser = createAsyncThunk(
+  'CREATE_USER_FIREBASE',
+  async (user: User) => {
+    let response = {};
+    try {
+      response = await createUserFirebase(user);
+    } catch (err) {
+      throw new Error(err);
+    }
+    const payload = {
+      response,
+    };
+    return payload;
+  }
+);
+
+export const signIn = createAsyncThunk('SIGN_IN_USER', async (user: User) => {
+  let response = {};
+  try {
+    response = await signInFirebase(user);
+  } catch (err) {
+    throw new Error(err);
+  }
+  const payload = {
+    response,
+  };
+  return payload;
+});
+
+export const signOut = createAsyncThunk('SIGN_OUT_USER', async () => {
+  try {
+    await signOutFirebase();
+  } catch (err) {
+    throw new Error(err);
+  }
+});
 
 export const profileSlice: Slice<ProfileState> = createSlice({
   name: 'PROFILE',
@@ -36,19 +78,26 @@ export const profileSlice: Slice<ProfileState> = createSlice({
     changeCheck(state) {
       state.check = !state.check;
     },
-    authUser(state, action: AuthPayload) {
-      if (
-        action.payload.login === 'gb' &&
-        action.payload.password === 'gb' &&
-        !state.auth.isAuth
-      ) {
+    signOut() {
+      signOutFirebase();
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      console.log('User created');
+    });
+    builder.addCase(signIn.fulfilled, (state, action) => {
+      if (action.payload.response['user']) {
         state.auth.isAuth = true;
-      } else if (state.auth.isAuth) {
+      } else {
         state.auth.isAuth = false;
       }
-    },
+    });
+    builder.addCase(signOut.fulfilled, (state) => {
+      state.auth.isAuth = false;
+    });
   },
 });
 
-export const { changeCheck, authUser } = profileSlice.actions;
+export const { changeCheck } = profileSlice.actions;
 export default profileSlice.reducer;
