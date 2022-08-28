@@ -157,7 +157,7 @@ export const SignUp: FC = () => {
                 className="input"
               />
             </label>
-            {errors.surname && <Alert severity="error">{errors.surname}</Alert>}
+            {errors.name && <Alert severity="error">{errors.name}</Alert>}
           </fieldset>
           <fieldset>
             <label>
@@ -205,7 +205,7 @@ export const SignUp: FC = () => {
                 className="input"
               />
             </label>
-            {errors.name && <Alert severity="error">{errors.name}</Alert>}
+            {errors.email && <Alert severity="error">{errors.email}</Alert>}
           </fieldset>
           <fieldset>
             <label>

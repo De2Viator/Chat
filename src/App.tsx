@@ -5,6 +5,7 @@ import { Layout } from './components/Layout/Layout';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { ProtectedRoute } from './routes/protectedRoutes';
+import { Auth } from './components/Auth/Auth';
 
 const Chat = lazy(() =>
   import('./components/Chat/Chat').then((module) => ({
@@ -13,8 +14,8 @@ const Chat = lazy(() =>
 );
 
 const Profile = lazy(() =>
-  import('./components/Profile/Profile').then((module) => ({
-    default: module.Profile,
+  import('./components/Auth/Auth').then((module) => ({
+    default: module.Auth,
   }))
 );
 
@@ -37,14 +38,14 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route path="profile" element={<Profile />} />
+              <Route path="auth" element={<Auth />} />
+              <Route path="signUp" element={<SignUp />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="home" element={<Home />} />
                 <Route path="chats" element={<Chat />}>
                   <Route path=":id" />
                 </Route>
               </Route>
-              <Route path="signUp" element={<SignUp />} />
             </Route>
           </Routes>
         </Suspense>

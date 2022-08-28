@@ -115,7 +115,7 @@ export const Layout: FC = () => {
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  <Link to="/profile" className="link">
+                  <Link to="/auth" className="link">
                     Profile
                   </Link>
                 </Button>
