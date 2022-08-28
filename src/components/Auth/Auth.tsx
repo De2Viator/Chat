@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import './Auth.scss';
-import { Errors, ErrorsMessages } from '../shared/errors';
+import { Errors, ErrorsMessages } from '../../shared/errors';
 import { signIn as signInStore } from '../../store/profile/profileSlice';
 import { StoreState } from '../../store/store';
 import { Button } from '../Button/Button';

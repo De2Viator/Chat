@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import { SignInUser } from '../../components/shared/auth';
+import { SignInUser, SignUpUser } from '../../shared/user';
 import { signIn as signInServer } from '../../api/api';
+import { signUp as signUpServer } from '../../api/api';
 
 export interface ProfileState {
   check: boolean;
@@ -14,9 +15,14 @@ export interface ProfileAction {
   changeCheck: () => void;
 }
 
-export const signUp = createAsyncThunk('SIGN_UP_USER', async () => {
-  //
-});
+export const signUp = createAsyncThunk(
+  'SIGN_UP_USER',
+  async (payload: SignUpUser) => {
+    console.log(payload);
+    const response = await signUpServer(payload);
+    return response;
+  }
+);
 
 export const signIn = createAsyncThunk(
   'SIGN_IN_USER',
@@ -50,7 +56,7 @@ export const profileSlice: Slice<ProfileState> = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, () => {
-      console.log('User created');
+      console.log('Sign Up!');
     });
     builder.addCase(signIn.fulfilled, () => {
       console.log('Sign In!');

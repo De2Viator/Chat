@@ -6,7 +6,7 @@ export interface User {
   messages?: Message[];
 }
 
-export interface RegisteredUser {
+export interface SignUpUser {
   hobbies: string[];
   name: string;
   surname: string;
@@ -16,4 +16,9 @@ export interface RegisteredUser {
   password: string;
   nick: string;
   photo: File;
+}
+
+export interface SignInUser {
+  email: string;
+  password: string;
 }

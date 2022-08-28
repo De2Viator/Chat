@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { User } from '../shared/user';
+import { User } from '../../shared/user';
 import { Link } from 'react-router-dom';
 import './userList.scss';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';

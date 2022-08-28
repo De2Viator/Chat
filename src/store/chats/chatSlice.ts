@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import { User } from '../../components/shared/user';
+import { User } from '../../shared/user';
 
 export interface ChatState {
   users: User[];

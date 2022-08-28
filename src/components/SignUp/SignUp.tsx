@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core';
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, Dispatch, FC } from 'react';
 import Alert from '@mui/material/Alert';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
@@ -22,8 +22,10 @@ import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import './SignUp.scss';
-import { Errors, ErrorsMessages } from '../shared/errors';
-import { RegisteredUser } from '../shared/user';
+import { Errors, ErrorsMessages } from '../../shared/errors';
+import { SignUpUser } from '../../shared/user';
+import { signUp as signUpStore } from '../../store/profile/profileSlice';
+import { useDispatch } from 'react-redux';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,7 +62,7 @@ export const SignUp: FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors>({} as Errors);
   const theme = useTheme();
-
+  const dispatch = useDispatch();
   const handleUserHobby = (event: SelectChangeEvent<typeof userHobby>) => {
     const {
       target: { value },
@@ -79,7 +81,7 @@ export const SignUp: FC = () => {
     const passwordReg = /.{10}/;
     const nameReg = /\D\S+/;
     const errorForm = {} as Errors;
-    if (!emailReg.test(email)) {
+    /*if (!emailReg.test(email)) {
       errorForm.email = ErrorsMessages.EMAIL;
     }
 
@@ -118,9 +120,9 @@ export const SignUp: FC = () => {
     if (Object.values(errorForm).length) {
       setErrors(errorForm);
       return;
-    }
+    }*/
 
-    const user: RegisteredUser = {
+    const user: SignUpUser = {
       name,
       surname,
       nick,
@@ -131,7 +133,7 @@ export const SignUp: FC = () => {
       email,
       password,
     };
-    console.log(user);
+    dispatch<any>(signUpStore(user));
   }
   return (
     <>
@@ -154,7 +156,7 @@ export const SignUp: FC = () => {
                 id="outlined-basic"
                 type="text"
                 variant="outlined"
-                className="input"
+                className="input w-100"
               />
             </label>
             {errors.name && <Alert severity="error">{errors.name}</Alert>}
@@ -170,7 +172,7 @@ export const SignUp: FC = () => {
                 id="outlined-basic"
                 type="text"
                 variant="outlined"
-                className="input"
+                className="input w-100"
               />
             </label>
             {errors.surname && <Alert severity="error">{errors.surname}</Alert>}
@@ -186,7 +188,7 @@ export const SignUp: FC = () => {
                 id="outlined-basic"
                 type="text"
                 variant="outlined"
-                className="input"
+                className="input w-100"
               />
             </label>
             {errors.nick && <Alert severity="error">{errors.nick}</Alert>}
@@ -202,7 +204,7 @@ export const SignUp: FC = () => {
                 id="outlined-basic"
                 type="text"
                 variant="outlined"
-                className="input"
+                className="input w-100"
               />
             </label>
             {errors.email && <Alert severity="error">{errors.email}</Alert>}
@@ -270,7 +272,7 @@ export const SignUp: FC = () => {
                 minRows={2}
                 placeholder="Tell about yourself"
                 variant="outlined"
-                className="input"
+                className="input w-100"
               />
             </label>
             {errors.description && (
@@ -320,6 +322,7 @@ export const SignUp: FC = () => {
             <input
               id="photo"
               type="file"
+              name="photo"
               onChange={(e) => handlerUploadPhoto(e)}
             />
             <div className="photo-wrp">
