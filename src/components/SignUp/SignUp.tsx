@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core';
-import React, { ChangeEvent, Dispatch, FC } from 'react';
+import React, { ChangeEvent, FC, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
@@ -24,8 +24,12 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import './SignUp.scss';
 import { Errors, ErrorsMessages } from '../../shared/errors';
 import { SignUpUser } from '../../shared/user';
-import { signUp as signUpStore } from '../../store/profile/profileSlice';
-import { useDispatch } from 'react-redux';
+import {
+  setAuthError,
+  signUp as signUpStore,
+} from '../../store/profile/profileSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreState } from '../../store/store';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -61,6 +65,7 @@ export const SignUp: FC = () => {
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors>({} as Errors);
+  const authError = useSelector<StoreState>((state) => state.auth.error);
   const theme = useTheme();
   const dispatch = useDispatch();
   const handleUserHobby = (event: SelectChangeEvent<typeof userHobby>) => {
@@ -81,7 +86,7 @@ export const SignUp: FC = () => {
     const passwordReg = /.{10}/;
     const nameReg = /\D\S+/;
     const errorForm = {} as Errors;
-    /*if (!emailReg.test(email)) {
+    if (!emailReg.test(email)) {
       errorForm.email = ErrorsMessages.EMAIL;
     }
 
@@ -120,7 +125,7 @@ export const SignUp: FC = () => {
     if (Object.values(errorForm).length) {
       setErrors(errorForm);
       return;
-    }*/
+    }
 
     const user: SignUpUser = {
       name,
@@ -135,6 +140,11 @@ export const SignUp: FC = () => {
     };
     dispatch<any>(signUpStore(user));
   }
+  useEffect(() => {
+    return () => {
+      dispatch<any>(setAuthError(''));
+    };
+  }, []);
   return (
     <>
       <div className="form-wrp">
@@ -335,6 +345,7 @@ export const SignUp: FC = () => {
           <Button type="submit" variant="contained">
             Send Form
           </Button>
+          {authError && <Alert severity="error">{authError as string}</Alert>}
         </form>
       </div>
     </>

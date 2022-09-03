@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import './Layout.scss';
-import { signOut } from '../../store/profile/profileSlice';
+import { setAuthError, signOut } from '../../store/profile/profileSlice';
 import axios from 'axios';
 
 import React, { FC } from 'react';
@@ -27,6 +27,7 @@ export const Layout: FC = () => {
     (error) => {
       if (error.response.status === 401) {
         dispatch<any>(signOut());
+        dispatch(setAuthError(error.response.data));
       }
       return error;
     }

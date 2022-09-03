@@ -5,8 +5,8 @@ import { signUp as signUpServer } from '../../api/api';
 
 export interface AuthState {
   isAuth: boolean;
+  error: string;
 }
-
 export const signUp = createAsyncThunk(
   'SIGN_UP_USER',
   async (payload: SignUpUser) => {
@@ -31,8 +31,14 @@ export const profileSlice: Slice<AuthState> = createSlice({
   name: 'PROFILE',
   initialState: {
     isAuth: false as boolean,
+    error: '',
   },
-  reducers: {},
+  reducers: {
+    setAuthError(state, payload: { payload: string; type: string }) {
+      console.log(payload);
+      state.error = payload.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state) => {
       state.isAuth = true;
@@ -46,5 +52,5 @@ export const profileSlice: Slice<AuthState> = createSlice({
   },
 });
 
-export const { changeCheck } = profileSlice.actions;
+export const { setAuthError } = profileSlice.actions;
 export default profileSlice.reducer;

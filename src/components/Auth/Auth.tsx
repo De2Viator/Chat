@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -11,16 +11,21 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import './Auth.scss';
 import { Errors, ErrorsMessages } from '../../shared/errors';
-import { signIn as signInStore } from '../../store/profile/profileSlice';
+import {
+  setAuthError,
+  signIn as signInStore,
+} from '../../store/profile/profileSlice';
 import { Button } from '../Button/Button';
+import { StoreState } from '../../store/store';
 
 export const Auth: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors>({} as Errors);
+  const authError = useSelector<StoreState>((state) => state.auth.error);
   const dispatch = useDispatch();
-  const signIn = () => {
+  const signIn = async () => {
     setErrors({} as Errors);
     const emailReg = /\w{8,15}@gmail.com/;
     const passwordReg = /.{10}/;
@@ -44,6 +49,11 @@ export const Auth: FC = () => {
     };
     dispatch<any>(signInStore(payload));
   };
+  useEffect(() => {
+    return () => {
+      dispatch<any>(setAuthError(''));
+    };
+  }, []);
   return (
     <>
       <div className="auth">
@@ -104,6 +114,7 @@ export const Auth: FC = () => {
                 Sign In
               </Button>
             </div>
+            {authError && <Alert severity="error">{authError as string}</Alert>}
           </form>
         </div>
       </div>
