@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { SignInUser } from '../shared/user';
 import { SignUpUser } from '../shared/user';
-
 export const url =
   'https://www.reddit.com/r/Wallstreetbets/top.json?limit=10&t=year';
 
@@ -9,6 +8,11 @@ const SERVER = 'http://localhost:3030';
 
 export const signIn = async (user: SignInUser) => {
   const response = await axios.post(`${SERVER}/auth/signIn`, user);
+  if (response.status === 200) {
+    return response;
+  } else {
+    return Promise.reject(response.status);
+  }
 };
 
 export const signUp = async (user: SignUpUser) => {
@@ -23,4 +27,5 @@ export const signUp = async (user: SignUpUser) => {
   formData.append('hobbies', JSON.stringify(user.hobbies));
   formData.append('birthdayDate', user.birthdayDate);
   const response = await axios.post(`${SERVER}/auth/signUp`, formData);
+  return response;
 };

@@ -3,23 +3,13 @@ import storage from 'redux-persist/es/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import chatSlice, { ChatState } from './chats/chatSlice';
-import { ChatActions } from './chats/chatSlice';
-import profileSlice, {
-  ProfileState,
-  ProfileAction,
-} from './profile/profileSlice';
+import profileSlice, { AuthState } from './profile/profileSlice';
 import homeSlice, { HomeState } from './home/home.slice';
 
 export interface StoreState {
-  profile: ProfileState;
+  auth: AuthState;
   chat: ChatState;
   home: HomeState;
-}
-
-export interface StoreAction {
-  profile: ProfileAction;
-  chat: ChatActions;
-  type: string;
 }
 
 const persStore = {
@@ -29,7 +19,7 @@ const persStore = {
 };
 
 const rootReducer = combineReducers({
-  profile: profileSlice,
+  auth: profileSlice,
   chat: chatSlice,
   home: homeSlice,
 });

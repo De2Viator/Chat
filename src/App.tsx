@@ -13,12 +13,6 @@ const Chat = lazy(() =>
   }))
 );
 
-const Profile = lazy(() =>
-  import('./components/Auth/Auth').then((module) => ({
-    default: module.Auth,
-  }))
-);
-
 const Home = lazy(() =>
   import('./components/Home/Home').then((module) => ({
     default: module.Home,

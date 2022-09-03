@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -12,11 +12,9 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import './Auth.scss';
 import { Errors, ErrorsMessages } from '../../shared/errors';
 import { signIn as signInStore } from '../../store/profile/profileSlice';
-import { StoreState } from '../../store/store';
 import { Button } from '../Button/Button';
 
 export const Auth: FC = () => {
-  const isAuth = useSelector((state: StoreState) => state.profile.auth.isAuth);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(true);
@@ -101,9 +99,7 @@ export const Auth: FC = () => {
               <Link to="/signUp">Sign Up</Link>
               <Button
                 addField={signIn}
-                disabled={
-                  !((email !== '' && password !== '') || isAuth === false)
-                }
+                disabled={!(email !== '' && password !== '')}
               >
                 Sign In
               </Button>
