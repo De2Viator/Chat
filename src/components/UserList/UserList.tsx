@@ -1,45 +1,45 @@
 import React, { FC, useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { User } from '../../shared/user';
+import { ChatUser } from '../../shared/user';
 import { Link } from 'react-router-dom';
 import './userList.scss';
-import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ListItemButton, ListItemText } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../store/store';
-import { getChats } from '../../store/chats/chatSlice';
+import { getUsers } from '../../store/users/userSlice';
 
 export const UserList: FC = () => {
-  const users = useSelector<StoreState>((state) => state.chat.users) as User[];
+  const users = useSelector<StoreState>(
+    (state) => state.user.users
+  ) as ChatUser[];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch<any>(getChats());
+    dispatch<any>(getUsers());
   }, []);
-  const deleteUser = (user: User) => {
-    console.log(user);
-    console.log('deleted');
-  };
   return (
     <>
       <List>
-        {users.map((user: User) => (
-          <Link className="user-link" key={user.id} to={`/messages/${user.id}`}>
+        {users.map((user: ChatUser) => (
+          <Link
+            className="user-link"
+            key={user._id}
+            to={`/messages/${user._id}`}
+          >
             <ListItem disablePadding data-testid="message">
               <ListItemButton>
-                <ListItemIcon
-                  data-testid="deleteUser"
-                  onClick={() => deleteUser(user)}
-                >
-                  <DeleteIcon />
-                </ListItemIcon>
-                <ListItemText>{user.name}</ListItemText>
+                <img
+                  className="user-image"
+                  src={`data:image${user.photo.type};base64,${user.photo.data}`}
+                  alt="user image"
+                />
+                <ListItemText>{user.nick}</ListItemText>
               </ListItemButton>
             </ListItem>
           </Link>
         ))}
-      </List>{' '}
+      </List>
     </>
   );
 };

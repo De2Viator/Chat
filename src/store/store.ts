@@ -5,11 +5,13 @@ import thunk from 'redux-thunk';
 import chatSlice, { ChatState } from './chats/chatSlice';
 import profileSlice, { AuthState } from './profile/profileSlice';
 import homeSlice, { HomeState } from './home/home.slice';
+import userSlice, { UserState } from './users/userSlice';
 
 export interface StoreState {
   auth: AuthState;
   chat: ChatState;
   home: HomeState;
+  user: UserState;
 }
 
 const persStore = {
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
   auth: profileSlice,
   chat: chatSlice,
   home: homeSlice,
+  user: userSlice,
 });
 
 const persistReducers = persistReducer(persStore, rootReducer);

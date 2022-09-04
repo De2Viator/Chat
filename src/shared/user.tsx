@@ -22,3 +22,12 @@ export interface SignInUser {
   email: string;
   password: string;
 }
+
+export interface ChatUser {
+  nick: string;
+  photo: {
+    data: string;
+    type: string;
+  };
+  _id: string;
+}

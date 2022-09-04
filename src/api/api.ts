@@ -29,3 +29,8 @@ export const signUp = async (user: SignUpUser) => {
   const response = await axios.post(`${SERVER}/auth/signUp`, formData);
   return response;
 };
+
+export const getUsers = async () => {
+  const response = await axios.get(`${SERVER}/users/`);
+  return response;
+};
