@@ -30,6 +30,7 @@ import {
 } from '../../store/profile/profileSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -67,6 +68,7 @@ export const SignUp: FC = () => {
   const [errors, setErrors] = useState<Errors>({} as Errors);
   const authError = useSelector<StoreState>((state) => state.auth.error);
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleUserHobby = (event: SelectChangeEvent<typeof userHobby>) => {
     const {
@@ -138,7 +140,9 @@ export const SignUp: FC = () => {
       email,
       password,
     };
-    dispatch<any>(signUpStore(user));
+    dispatch<any>(signUpStore(user)).then(() => {
+      navigate('/chats');
+    });
   }
   useEffect(() => {
     return () => {
