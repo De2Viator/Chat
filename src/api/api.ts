@@ -26,11 +26,15 @@ export const signUp = async (user: SignUpUser) => {
   formData.append('password', user.password);
   formData.append('hobbies', JSON.stringify(user.hobbies));
   formData.append('birthdayDate', user.birthdayDate);
-  const response = await axios.post(`${SERVER}/auth/signUp`, formData);
+  const response = await axios.post(`${SERVER}/auth/signUp`, formData, {
+    withCredentials: true,
+  });
   return response;
 };
 
 export const getUsers = async () => {
-  const response = await axios.get(`${SERVER}/users/`);
+  const response = await axios.get(`${SERVER}/users/`, {
+    withCredentials: true,
+  });
   return response;
 };
