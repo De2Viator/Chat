@@ -140,8 +140,10 @@ export const SignUp: FC = () => {
       email,
       password,
     };
-    dispatch<any>(signUpStore(user)).then(() => {
-      navigate('/chats');
+    dispatch<any>(signUpStore(user)).then((data) => {
+      if (data.payload.status === 200) {
+        navigate('/chats');
+      }
     });
   }
   useEffect(() => {

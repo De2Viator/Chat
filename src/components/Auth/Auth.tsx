@@ -48,8 +48,10 @@ export const Auth: FC = () => {
       email,
       password,
     };
-    dispatch<any>(signInStore(payload)).then(() => {
-      //navigate('/chats');
+    dispatch<any>(signInStore(payload)).then((data) => {
+      if (data.payload.status === 200) {
+        navigate('/chats');
+      }
     });
   };
   useEffect(() => {
