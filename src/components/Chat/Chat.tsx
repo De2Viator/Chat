@@ -1,14 +1,13 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { UserList } from '../UserList/UserList';
+import './Chat.scss';
 
 export function Chat() {
   return (
     <>
-      <div className="board">
-        <div className="board__item-chats">
-          <UserList />
-        </div>
-      </div>
+      <UserList />
+      <Outlet />
     </>
   );
 }

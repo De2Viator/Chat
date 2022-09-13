@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import { Message } from '../shared/message';
-type Props = {
-  messageList: Message[];
-};
-export function MessageList(props: Props) {
+import { Message } from '../../shared/message';
+import { Message as MessageEl } from './Message/Message';
+
+export function MessageList() {
+  const [messageList, setMessageList] = useState<Message[]>([]);
   return (
     <List>
-      {props.messageList.map((message) => (
-        <ListItem key={message.id} data-testid="message">
-          {message.name}:{message.message}
-        </ListItem>
+      {messageList.map((message: Message) => (
+        <MessageEl key={message._id} message={message} />
       ))}
     </List>
   );

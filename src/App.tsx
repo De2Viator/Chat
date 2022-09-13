@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { ProtectedRoute } from './routes/protectedRoutes';
 import { Auth } from './components/Auth/Auth';
-
 const Chat = lazy(() =>
   import('./components/Chat/Chat').then((module) => ({
     default: module.Chat,
@@ -25,6 +24,12 @@ const SignUp = lazy(() =>
   }))
 );
 
+const MessageList = lazy(() =>
+  import('./components/MessageList/MessageList').then((module) => ({
+    default: module.MessageList,
+  }))
+);
+
 function App() {
   return (
     <Provider store={store}>
@@ -37,7 +42,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="home" element={<Home />} />
                 <Route path="chats" element={<Chat />}>
-                  <Route path=":id" />
+                  <Route path=":id" element={<MessageList />} />
                 </Route>
               </Route>
             </Route>
