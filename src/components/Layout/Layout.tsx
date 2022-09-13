@@ -13,6 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { FC, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { setAuthError, signOut } from '../../store/profile/profileSlice';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 interface Page {
   name: string;
   path: string;
@@ -52,6 +55,22 @@ export const Layout: FC = () => {
     textDecoration: 'none',
     color: 'white',
   };
+  const dispatch = useDispatch();
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        dispatch<any>(signOut());
+        dispatch(setAuthError(error.response.data));
+      }
+      return error;
+    }
+  );
+  axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
+  axios.defaults.headers.common['Access-Control-Allow-Origin'] =
+    'http://localhost:8080';
 
   return (
     <>

@@ -19,19 +19,6 @@ import { Button } from '../Button/Button';
 import { StoreState } from '../../store/store';
 
 export const Auth: FC = () => {
-  /*const dispatch = useDispatch();
-  axios.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      if (error.response.status === 401) {
-        dispatch<any>(signOut());
-        dispatch(setAuthError(error.response.data));
-      }
-      return error;
-    }
-  );*/
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(true);
@@ -62,7 +49,7 @@ export const Auth: FC = () => {
       password,
     };
     dispatch<any>(signInStore(payload)).then(() => {
-      navigate('/chats');
+      //navigate('/chats');
     });
   };
   useEffect(() => {

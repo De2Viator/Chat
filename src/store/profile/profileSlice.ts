@@ -24,7 +24,7 @@ export const signIn = createAsyncThunk(
 );
 
 export const signOut = createAsyncThunk('SIGN_OUT_USER', async () => {
-  console.log('signOut');
+  return false;
 });
 
 export const profileSlice: Slice<AuthState> = createSlice({
@@ -35,7 +35,6 @@ export const profileSlice: Slice<AuthState> = createSlice({
   },
   reducers: {
     setAuthError(state, payload: { payload: string; type: string }) {
-      console.log(payload);
       state.error = payload.payload;
     },
   },
@@ -45,6 +44,9 @@ export const profileSlice: Slice<AuthState> = createSlice({
     });
     builder.addCase(signIn.fulfilled, (state) => {
       state.isAuth = true;
+    });
+    builder.addCase(signIn.rejected, (state) => {
+      state.isAuth = false;
     });
     builder.addCase(signOut.fulfilled, (state) => {
       state.isAuth = false;

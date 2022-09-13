@@ -11,7 +11,7 @@ export const signIn = async (user: SignInUser) => {
   if (response.status === 200) {
     return response;
   } else {
-    return Promise.reject(response.status);
+    return Promise.reject(response.data);
   }
 };
 
