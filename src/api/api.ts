@@ -7,7 +7,9 @@ export const url =
 const SERVER = 'http://localhost:3030';
 
 export const signIn = async (user: SignInUser) => {
-  const response = await axios.post(`${SERVER}/auth/signIn`, user);
+  const response = await axios.post(`${SERVER}/auth/signIn`, user, {
+    withCredentials: true,
+  });
   if (response.status === 200) {
     return response;
   } else {
