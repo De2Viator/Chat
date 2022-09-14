@@ -6,8 +6,14 @@ import './Chat.scss';
 export function Chat() {
   return (
     <>
-      <UserList />
-      <Outlet />
+      <div className="chat-board">
+        <div className="chat-list">
+          <UserList />
+        </div>
+        <div className="message-list">
+          <Outlet />
+        </div>
+      </div>
     </>
   );
 }
