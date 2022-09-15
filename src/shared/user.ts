@@ -1,11 +1,3 @@
-import { Message } from './message';
-
-export interface User {
-  name: string;
-  id: string;
-  messages?: Message[];
-}
-
 export interface SignUpUser {
   hobbies: string[];
   name: string;
@@ -13,9 +5,13 @@ export interface SignUpUser {
   description: string;
   birthdayDate: string;
   email: string;
-  password: string;
+  password?: string;
   nick: string;
   photo: File;
+}
+
+export interface User extends SignUpUser {
+  _id: string;
 }
 
 export interface SignInUser {

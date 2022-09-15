@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import { ChatUser } from '../../shared/user';
+import { ChatUser, User } from '../../shared/user';
 import { getUsers as getUsersServer } from '../../api/api';
+import { searchUsers as searchUsersServer } from '../../api/api';
 
 export interface UserState {
   users: ChatUser[];
+  user: User;
+  userSearching: string;
 }
 
 export const getUsers = createAsyncThunk('GET_USERS', async () => {
@@ -11,16 +14,35 @@ export const getUsers = createAsyncThunk('GET_USERS', async () => {
   return response;
 });
 
+export const searchUsers = createAsyncThunk(
+  'SEARCH_USERS',
+  async (name: string) => {
+    const response = await searchUsersServer(name);
+    return response;
+  }
+);
+
 export const userSlice: Slice<UserState> = createSlice({
-  name: 'PROFILE',
+  name: 'USERS',
   initialState: {
     users: [] as ChatUser[],
+    user: {} as User,
+    userSearching: '',
   },
-  reducers: {},
+  reducers: {
+    setUserSearch(state, payload) {
+      state.userSearching = payload.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, payload) => {
       state.users = [...payload.payload.data];
     });
+    builder.addCase(searchUsers.fulfilled, (state, payload) => {
+      state.users = [...payload.payload.data];
+      console.log(state.users);
+    });
   },
 });
+export const { setUserSearch } = userSlice.actions;
 export default userSlice.reducer;

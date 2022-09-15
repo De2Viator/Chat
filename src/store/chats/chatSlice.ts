@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import { User } from '../../shared/user';
+import { getChats as getChatsServer } from '../../api/api';
+import { Chat } from '../../shared/chat';
 
 export interface ChatState {
-  users: User[];
+  chats: Chat[];
 }
 
-export const getChats = createAsyncThunk('CHAT_GET', async () => {
-  //
+export const getChats = createAsyncThunk('CHAT_GET', async (userId: string) => {
+  const chats = await getChatsServer(userId);
+  return chats;
 });
 
 export const addChat = createAsyncThunk('CHAT_ADD', () => {
@@ -24,7 +26,7 @@ export const deleteChat = createAsyncThunk('CHAT_DELETE', async () => {
 export const chatSlice: Slice<ChatState> = createSlice({
   name: 'CHAT',
   initialState: {
-    users: [] as User[],
+    chats: [] as Chat[],
   },
   extraReducers: (builder) => {
     builder.addCase(addChat.fulfilled, () => {
@@ -36,12 +38,10 @@ export const chatSlice: Slice<ChatState> = createSlice({
     builder.addCase(addMessage.fulfilled, () => {
       console.log('add message');
     });
-    builder.addCase(getChats.fulfilled, () => {
-      console.log('get');
+    builder.addCase(getChats.fulfilled, (state: ChatState) => {
+      console.log(state);
     });
   },
   reducers: {},
 });
-
-export const { getUsers } = chatSlice.actions;
 export default chatSlice.reducer;
