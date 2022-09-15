@@ -13,9 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { FC, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { StoreState } from '../../store/store';
 import { setAuthError, signOut } from '../../store/profile/profileSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { User } from '../../shared/user';
 interface Page {
   name: string;
   path: string;
@@ -56,6 +58,7 @@ export const Layout: FC = () => {
     color: 'white',
   };
   const dispatch = useDispatch();
+  const user = useSelector<StoreState>((state) => state.user.user) as User;
   axios.interceptors.response.use(
     (response) => {
       return response;
@@ -164,7 +167,10 @@ export const Layout: FC = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar
+                    alt={user.name}
+                    src={`data:image${user.photo.type};base64,${user.photo.data}`}
+                  />
                 </IconButton>
               </Tooltip>
               <Menu

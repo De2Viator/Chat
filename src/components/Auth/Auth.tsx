@@ -17,6 +17,7 @@ import {
 } from '../../store/profile/profileSlice';
 import { Button } from '../Button/Button';
 import { StoreState } from '../../store/store';
+import { registerUser } from '../../store/users/userSlice';
 
 export const Auth: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -50,6 +51,7 @@ export const Auth: FC = () => {
     };
     dispatch<any>(signInStore(payload)).then((data) => {
       if (data.payload.status === 200) {
+        dispatch<any>(registerUser(data.payload.data));
         navigate('/chats');
       }
     });

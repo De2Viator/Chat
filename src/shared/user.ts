@@ -7,7 +7,10 @@ export interface SignUpUser {
   email: string;
   password?: string;
   nick: string;
-  photo: File;
+  photo: {
+    data: string;
+    type: string;
+  };
 }
 
 export interface User extends SignUpUser {
