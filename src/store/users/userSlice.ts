@@ -26,7 +26,13 @@ export const userSlice: Slice<UserState> = createSlice({
   name: 'USERS',
   initialState: {
     users: [] as ChatUser[],
-    user: {} as User,
+    user: {
+      photo: {
+        data: '',
+        type: '',
+      },
+      name: '',
+    } as User,
     userSearching: '',
   },
   reducers: {

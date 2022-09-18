@@ -16,17 +16,23 @@ export interface StoreState {
   message: MessageState;
 }
 
+const userPersistConfig = {
+  key: 'user',
+  storage,
+  blacklist: ['userSearching'],
+};
+
 const persStore = {
   key: 'root',
   storage,
-  blacklist: ['chat'],
+  blacklist: ['user'],
 };
 
 const rootReducer = combineReducers({
   auth: profileSlice,
   chat: chatSlice,
   home: homeSlice,
-  user: userSlice,
+  user: persistReducer(userPersistConfig, userSlice),
   message: messageSlice,
 });
 
