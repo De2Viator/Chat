@@ -14,7 +14,7 @@ import { getMessages } from '../../store/messages/messagesSlice';
 import { socket } from '../../api/api';
 
 export function MessageList() {
-  const [messageList, setMessageList] = useSelector<StoreState>(
+  const messages = useSelector<StoreState>(
     (state) => state.message.messages
   ) as Message[];
   const [message, setMessage] = useState<string>('');
@@ -35,17 +35,19 @@ export function MessageList() {
     });
   };
   useEffect(() => {
-    dispatch<any>(getMessages({ userId, partnerId, chatId })).then(() => {
-      console.log(messageList);
-    });
+    dispatch<any>(getMessages({ userId, partnerId, chatId }));
     socket.on('get-message', (data) => {
       console.log(data);
     });
   }, []);
-  //<List sx={{ height: '78vh' }}></List>
   return (
     <>
       <div className="message-sender">
+        <List>
+          {messages.map((message: Message) => (
+            <p key={message._id}>{message.message}</p>
+          ))}
+        </List>
         <TextField
           onChange={(e) => setMessage(e.target.value)}
           sx={{ width: '90%' }}

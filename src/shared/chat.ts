@@ -1,5 +1,8 @@
 export interface Chat {
-  photo: string;
+  photo: {
+    type: string;
+    data: string;
+  };
   lastMessage: string;
   date: Date;
   name: string;

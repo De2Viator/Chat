@@ -25,7 +25,7 @@ const userPersistConfig = {
 const persStore = {
   key: 'root',
   storage,
-  blacklist: ['user'],
+  blacklist: ['user', 'chat', 'message'],
 };
 
 const rootReducer = combineReducers({

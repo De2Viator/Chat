@@ -19,7 +19,6 @@ export const messageSlice: Slice<MessageState> = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getMessages.fulfilled, (state, action) => {
-      console.log(state);
       state.messages = action.payload.data;
     });
   },
