@@ -1,0 +1,23 @@
+.send {
+    width: 55px;
+    border-radius: 50px;
+    height: 55px;
+    font-size: 32px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-top: 3px;
+    margin-left: 8px;
+    background-color: rgb(76, 143, 226);
+    color:white;
+    transition-duration: .3s;
+}
+
+.send:hover {
+    background-color: rgb(23, 112, 220);
+    color: black;
+    transition-duration: .3s;
+}
+
+.message-sender {
+    display: flex;
+}

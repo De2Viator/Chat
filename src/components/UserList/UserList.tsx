@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../store/store';
 import { searchUsers } from '../../store/users/userSlice';
 import { User } from './User/User';
+import { setChatId } from '../../store/chats/chatSlice';
 
 export const UserList: FC = () => {
   const users = useSelector<StoreState>(
@@ -24,7 +25,11 @@ export const UserList: FC = () => {
     <>
       <List>
         {users.map((user: ChatUser) => (
-          <User key={user._id} user={user} />
+          <User
+            onClick={() => dispatch(setChatId(''))}
+            key={user._id}
+            user={user}
+          />
         ))}
       </List>
     </>

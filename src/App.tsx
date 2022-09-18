@@ -42,7 +42,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="home" element={<Home />} />
                 <Route path="chats" element={<Chat />}>
-                  <Route path=":id" element={<MessageList />} />
+                  <Route path=":partnerId" element={<MessageList />} />
                 </Route>
               </Route>
             </Route>

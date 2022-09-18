@@ -4,19 +4,12 @@ import { Chat } from '../../shared/chat';
 
 export interface ChatState {
   chats: Chat[];
+  chatId: string;
 }
 
 export const getChats = createAsyncThunk('CHAT_GET', async (userId: string) => {
   const chats = await getChatsServer(userId);
   return chats;
-});
-
-export const addChat = createAsyncThunk('CHAT_ADD', () => {
-  //
-});
-
-export const addMessage = createAsyncThunk('MESSAGE_ADD', async () => {
-  //
 });
 
 export const deleteChat = createAsyncThunk('CHAT_DELETE', async () => {
@@ -27,21 +20,22 @@ export const chatSlice: Slice<ChatState> = createSlice({
   name: 'CHAT',
   initialState: {
     chats: [] as Chat[],
+    chatId: '',
   },
   extraReducers: (builder) => {
-    builder.addCase(addChat.fulfilled, () => {
-      console.log('chat created');
-    });
     builder.addCase(deleteChat.fulfilled, () => {
       console.log('chat deleted');
     });
-    builder.addCase(addMessage.fulfilled, () => {
-      console.log('add message');
-    });
-    builder.addCase(getChats.fulfilled, (state: ChatState) => {
-      console.log(state);
+    builder.addCase(getChats.fulfilled, (state: ChatState, payload) => {
+      state.chats = payload.payload.data;
+      console.log(state.chats);
     });
   },
-  reducers: {},
+  reducers: {
+    setChatId(state, payload: { payload: string; type: string }) {
+      state.chatId = payload.payload;
+    },
+  },
 });
+export const { setChatId } = chatSlice.actions;
 export default chatSlice.reducer;

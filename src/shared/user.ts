@@ -7,10 +7,12 @@ export interface SignUpUser {
   email: string;
   password?: string;
   nick: string;
-  photo: {
-    data: string;
-    type: string;
-  };
+  photo:
+    | {
+        data: string;
+        type: string;
+      }
+    | Blob;
 }
 
 export interface User extends SignUpUser {
