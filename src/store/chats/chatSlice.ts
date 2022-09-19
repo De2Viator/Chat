@@ -33,7 +33,6 @@ export const chatSlice: Slice<ChatState> = createSlice({
   reducers: {
     setChatId(state, payload: { payload: string; type: string }) {
       state.chatId = payload.payload;
-      console.log(state.chatId);
     },
   },
 });

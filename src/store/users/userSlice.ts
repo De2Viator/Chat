@@ -41,7 +41,6 @@ export const userSlice: Slice<UserState> = createSlice({
     },
     registerUser(state, payload) {
       state.user = payload.payload;
-      console.log(state.user);
     },
   },
   extraReducers: (builder) => {
@@ -50,7 +49,6 @@ export const userSlice: Slice<UserState> = createSlice({
     });
     builder.addCase(searchUsers.fulfilled, (state, payload) => {
       state.users = [...payload.payload.data];
-      console.log(state.users);
     });
   },
 });
