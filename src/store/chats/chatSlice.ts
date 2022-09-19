@@ -28,12 +28,12 @@ export const chatSlice: Slice<ChatState> = createSlice({
     });
     builder.addCase(getChats.fulfilled, (state: ChatState, payload) => {
       state.chats = payload.payload.data;
-      console.log(state.chats);
     });
   },
   reducers: {
     setChatId(state, payload: { payload: string; type: string }) {
       state.chatId = payload.payload;
+      console.log(state.chatId);
     },
   },
 });

@@ -3,10 +3,9 @@ import { FC } from 'react';
 import { StoreState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Chat } from '../../shared/chat';
-import { Chat as ChatEl } from './Chat/Chat';
 import { User } from '../../shared/user';
 import { Link } from 'react-router-dom';
-import { getChats } from '../../store/chats/chatSlice';
+import { getChats, setChatId } from '../../store/chats/chatSlice';
 import { List } from '@mui/material';
 export const ChatList: FC = () => {
   const chats = useSelector<StoreState>((state) => state.chat.chats) as Chat[];
@@ -21,7 +20,11 @@ export const ChatList: FC = () => {
     <>
       <List>
         {chats.map((chat: Chat) => (
-          <Link to={chat._id} key={chat._id}>
+          <Link
+            onClick={() => dispatch<any>(setChatId(chat._id))}
+            to={chat._id}
+            key={chat._id}
+          >
             {chat._id}
           </Link>
         ))}
