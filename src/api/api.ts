@@ -3,7 +3,7 @@ import socketIOClient from 'socket.io-client';
 
 import { Chat } from '../shared/chat';
 import { SERVER } from '../shared/constants';
-import { Message, MessageInfo } from '../shared/message';
+import { Message } from '../shared/message';
 import { ChatUser, SignInUser } from '../shared/user';
 import { SignUpUser } from '../shared/user';
 export { SERVER } from '../shared/constants';
@@ -67,13 +67,10 @@ export const getChats = async (
 };
 
 export const getMessages = async (
-  userData: MessageInfo
+  chatId: string
 ): Promise<AxiosResponse<Message[], { withCredentials: boolean }>> => {
-  const response = await axios.get(
-    `${SERVER}/messages?userId=${userData.userId}&partnerId=${userData.partnerId}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const response = await axios.get(`${SERVER}/messages?chatId=${chatId}`, {
+    withCredentials: true,
+  });
   return response;
 };

@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import { getMessages as getMessagesServer } from '../../api/api';
-import { Message, MessageInfo } from '../../shared/message';
+import { Message } from '../../shared/message';
 export interface MessageState {
   messages: Message[];
 }
 export const getMessages = createAsyncThunk(
   'GET_MESSAGES',
-  async (userData: MessageInfo) => {
-    const response = await getMessagesServer(userData);
+  async (chatId: string) => {
+    const response = await getMessagesServer(chatId);
     return response;
   }
 );
