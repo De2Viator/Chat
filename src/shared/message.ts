@@ -1,6 +1,7 @@
 export interface Message {
-  name: string;
-  message: string;
   _id: string;
+  message: string;
+  userId: string;
   chatId: string;
+  timeStamp: string;
 }

@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMessages } from '../../store/messages/messagesSlice';
 import { socket } from '../../api/api';
+import ListItem from '@mui/material/ListItem';
 
 export function MessageList() {
   const messages = useSelector<StoreState>(
@@ -43,17 +44,26 @@ export function MessageList() {
   return (
     <>
       <div className="message-sender">
-        <List>
+        <List sx={{ display: 'flex', flexDirection: 'column', width: '90%' }}>
           {messages.map((message: Message) => (
-            <p key={message._id}>{message.message}</p>
+            <ListItem
+              key={message._id}
+              className={`message ${
+                userId === message.userId ? 'user-message' : 'partner-message'
+              }`}
+            >
+              <span>{message.message}</span>
+            </ListItem>
           ))}
         </List>
-        <TextField
-          onChange={(e) => setMessage(e.target.value)}
-          sx={{ width: '90%' }}
-        />
-        <div className="send" onClick={sendMessage}>
-          <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
+        <div className="send-wrp">
+          <TextField
+            onChange={(e) => setMessage(e.target.value)}
+            sx={{ width: '90%' }}
+          />
+          <div className="send" onClick={sendMessage}>
+            <FontAwesomeIcon icon={faPaperPlane}></FontAwesomeIcon>
+          </div>
         </div>
       </div>
     </>

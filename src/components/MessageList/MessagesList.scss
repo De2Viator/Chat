@@ -20,4 +20,29 @@
 
 .message-sender {
     display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 100px;
+    padding:5px 0px;
+    margin-bottom: 10px;
+    padding-right: 10px;
+}
+
+.partner-message {
+    color: white;
+    background-color: #3784e2c5;
+    border-radius: 5px 5px 5px 0px;
+}
+
+.user-message {
+    color: black;
+    background-color: #44dd56d6;
+    border-radius: 5px 5px 0px 5px;
+    align-self: flex-end;
+}
+
+.send-wrp {
+    display: flex;
 }
