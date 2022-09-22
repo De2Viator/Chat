@@ -36,8 +36,8 @@ export function MessageList() {
   };
   useEffect(() => {
     dispatch<any>(getMessages(chatId));
-    socket.on('get-message', (data) => {
-      console.log(data);
+    socket.on('get-message', (data: Message) => {
+      console.log(data.chatId);
     });
   }, []);
   return (
