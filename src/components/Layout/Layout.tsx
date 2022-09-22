@@ -11,12 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { FC, useState } from 'react';
+import { FC, useState, memo } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import axios from 'axios';
+
 import { StoreState } from '../../store/store';
 import { setAuthError, signOut } from '../../store/profile/profileSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { User } from '../../shared/user';
 interface Page {
   name: string;
@@ -34,7 +35,7 @@ const pages: Page[] = [
 ];
 const settings = ['Logout'];
 
-export const Layout: FC = () => {
+export const Layout: FC = memo(function Lay() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -204,4 +205,4 @@ export const Layout: FC = () => {
       </main>
     </>
   );
-};
+});
