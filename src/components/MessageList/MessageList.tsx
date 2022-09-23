@@ -41,7 +41,15 @@ export function MessageList() {
   return (
     <>
       <div className="message-sender">
-        <List sx={{ display: 'flex', flexDirection: 'column', width: '90%' }}>
+        <List
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            overflowY: 'scroll',
+            height: '80vh',
+          }}
+        >
           {messages.map((message: Message) => (
             <ListItem
               key={message._id}
