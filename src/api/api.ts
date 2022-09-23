@@ -48,12 +48,16 @@ export const getUsers = async (): Promise<
   return response;
 };
 
-export const searchUsers = async (
-  nick: string
-): Promise<AxiosResponse<ChatUser[], { withCredentials: boolean }>> => {
-  const response = await axios.get(`${SERVER}/users/search?nick=${nick}`, {
-    withCredentials: true,
-  });
+export const searchUsers = async (userInfo: {
+  name: string;
+  userId: string;
+}): Promise<AxiosResponse<ChatUser[], { withCredentials: boolean }>> => {
+  const response = await axios.get(
+    `${SERVER}/users/search?nick=${userInfo.name}&id=${userInfo.userId}`,
+    {
+      withCredentials: true,
+    }
+  );
   return response;
 };
 

@@ -6,31 +6,47 @@ import { StoreState } from '../../store/store';
 import { searchUsers } from '../../store/users/userSlice';
 import { User } from './User/User';
 import { setChatId } from '../../store/chats/chatSlice';
+import { Chat } from '../../shared/chat';
 
 export const UserList: FC = () => {
   const users = useSelector<StoreState>(
     (state) => state.user.users
   ) as ChatUser[];
+  const chats = useSelector<StoreState>((state) => state.chat.chats) as Chat[];
   const userSearching = useSelector<StoreState>(
     (state) => state.user.userSearching
   ) as string;
   const dispatch = useDispatch();
-
+  const userId = useSelector<StoreState>(
+    (state) => state.user.user._id
+  ) as string;
   useEffect(() => {
     if (userSearching) {
-      dispatch<any>(searchUsers(userSearching));
+      dispatch<any>(
+        searchUsers({
+          name: userSearching,
+          userId,
+        })
+      );
     }
   }, [userSearching]);
   return (
     <>
       <List>
-        {users.map((user: ChatUser) => (
-          <User
-            onClick={() => dispatch(setChatId(''))}
-            key={user._id}
-            user={user}
-          />
-        ))}
+        {users.map((user: ChatUser) => {
+          return (
+            chats.find(
+              (chat) =>
+                chat.partner.userId === userId || chat.user.userId === userId
+            ) && (
+              <User
+                onClick={() => dispatch(setChatId(''))}
+                key={user._id ?? 0}
+                user={user}
+              />
+            )
+          );
+        })}
       </List>
     </>
   );

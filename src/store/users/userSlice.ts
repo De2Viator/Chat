@@ -16,8 +16,8 @@ export const getUsers = createAsyncThunk('GET_USERS', async () => {
 
 export const searchUsers = createAsyncThunk(
   'SEARCH_USERS',
-  async (name: string) => {
-    const response = await searchUsersServer(name);
+  async (userInfo: { name: string; userId: string }) => {
+    const response = await searchUsersServer(userInfo);
     return response;
   }
 );
@@ -49,6 +49,7 @@ export const userSlice: Slice<UserState> = createSlice({
     });
     builder.addCase(searchUsers.fulfilled, (state, payload) => {
       state.users = [...payload.payload.data];
+      console.log(state.users);
     });
   },
 });
