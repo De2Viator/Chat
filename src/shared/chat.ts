@@ -1,4 +1,4 @@
-interface ChatUser {
+export interface ChatUser {
   name: string;
   photo: {
     contentType: string;
@@ -9,10 +9,9 @@ interface ChatUser {
 
 export interface Chat {
   lastMessage: string;
-  date: Date;
-  name: string;
-  _id: string;
-  user: ChatUser;
-  partner: ChatUser;
   messageDate: string;
+  type: string;
+  partner: ChatUser;
+  user: ChatUser;
+  _id: string;
 }

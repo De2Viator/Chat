@@ -1,5 +1,4 @@
 import { Message } from '../../shared/message';
-import { Message as MessageEl } from './Message/Message';
 import { StoreState } from '../../store/store';
 import './MessagesList.scss';
 
@@ -10,9 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages } from '../../store/messages/messagesSlice';
-import { socket } from '../../api/api';
+import { addMessage, getMessages } from '../../store/messages/messagesSlice';
+import { setLastMessage } from '../../store/chats/chatSlice';
 import ListItem from '@mui/material/ListItem';
+import { socket } from '../../api/api';
 
 export function MessageList() {
   const messages = useSelector<StoreState>(
@@ -37,9 +37,6 @@ export function MessageList() {
   };
   useEffect(() => {
     dispatch<any>(getMessages(chatId));
-    socket.on('get-message', (data: Message) => {
-      console.log(data.chatId);
-    });
   }, []);
   return (
     <>

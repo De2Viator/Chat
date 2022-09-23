@@ -12,19 +12,17 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import './ChatList.scss';
 
-/*
-
-<List>
-        {chats.length &&
-          chats.map((chat: Chat) => (
-              {chat._id}
-            </Link>
-          ))}
-      </List>*/
 import { Chat } from '../../shared/chat';
 import { User } from '../../shared/user';
-import { getChats, setChatId } from '../../store/chats/chatSlice';
+import {
+  getChats,
+  setChatId,
+  setLastMessage,
+} from '../../store/chats/chatSlice';
 import { StoreState } from '../../store/store';
+import { Message } from '../../shared/message';
+import { socket } from '../../api/api';
+import { addMessage } from '../../store/messages/messagesSlice';
 export const ChatList: FC = () => {
   const chats = useSelector<StoreState>((state) => state.chat.chats) as Chat[];
   const user = useSelector<StoreState>((state) => state.user.user) as User;
@@ -37,17 +35,33 @@ export const ChatList: FC = () => {
     setSelectedIndex(index);
   };
   useEffect(() => {
-    //TODO LINK TO PARTNER ID
+    console.log('load');
     dispatch<any>(getChats(user._id));
+    socket.on('get-message', (data: Message) => {
+      console.log(data);
+      if (data.userId === user._id || data.partnerId === user._id) {
+        dispatch(addMessage(data));
+        dispatch(
+          setLastMessage({
+            chatId: data.chatId,
+            lastMessage: data.message,
+            messageDate: data.timeStamp,
+          })
+        );
+      }
+    });
   }, []);
-  //<ChatEl key={chat._id} chat={chat} />
   return (
     <>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {chats.map((chat) => (
           <Link
             onClick={() => dispatch<any>(setChatId(chat._id))}
-            to={chat._id}
+            to={
+              chat.user.userId === user._id
+                ? chat.user.userId
+                : chat.partner.userId
+            }
             key={chat._id}
             className="link"
           >

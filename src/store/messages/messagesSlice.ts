@@ -16,12 +16,20 @@ export const messageSlice: Slice<MessageState> = createSlice({
     messages: [] as Message[],
   },
   name: 'MESSAGE',
-  reducers: {},
+  reducers: {
+    addMessage(state, payload) {
+      const message = state.messages.find(
+        (message) => message._id === payload.payload._id
+      );
+      console.log(message);
+      if (!message) state.messages.push(payload.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getMessages.fulfilled, (state, action) => {
       state.messages = action.payload.data;
-      console.log(state.messages);
     });
   },
 });
+export const { addMessage } = messageSlice.actions;
 export default messageSlice.reducer;
