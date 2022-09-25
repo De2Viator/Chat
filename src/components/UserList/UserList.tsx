@@ -35,9 +35,10 @@ export const UserList: FC = () => {
       <List>
         {users.map((user: ChatUser) => {
           return (
-            chats.find(
-              (chat) =>
-                chat.partner.userId === userId || chat.user.userId === userId
+            !chats.find(
+              (chat: Chat) =>
+                chat.partner.userId === user._id ||
+                chat.user.userId === user._id
             ) && (
               <User
                 onClick={() => dispatch(setChatId(''))}
