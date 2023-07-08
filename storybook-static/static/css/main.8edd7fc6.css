@@ -1,0 +1,58 @@
+.button {
+  font-weight: 700;
+  border: 0;
+  border-radius: 3em;
+  cursor: pointer;
+}
+.button--small {
+  font-size: 12px;
+  padding: 10px 16px;
+}
+.button--medium {
+  font-size: 14px;
+  padding: 11px 20px;
+}
+.button--large {
+  font-size: 16px;
+  padding: 12px 24px;
+}
+
+.sended {
+    border: 5px solid green;
+  }
+  
+.notSended {
+    border: transparent;
+}
+
+.input-small {
+  padding: 5px 0px;
+}
+
+.input-medium {
+  padding: 10px 0px;
+}
+
+.input-large {
+  padding: 15px 0px;
+}
+
+.font-size-small {
+  font-size: 10px;
+}
+
+.font-size-medium {
+  font-size: 15px;
+}
+
+.fint-size-large {
+  font-size: 30px;
+}
+  
+input {
+  display: block;
+  width: 50%;
+}
+  
+
+/*# sourceMappingURL=main.8edd7fc6.css.map*/

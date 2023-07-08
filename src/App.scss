@@ -1,0 +1,19 @@
+.sended {
+  border: 1px solid green;
+}
+
+.notSended {
+  border: transparent;
+}
+
+.board {
+  display: flex;
+}
+
+.board__item-messages {
+  flex-grow:4;
+}
+
+.board__item-chats {
+  flex-grow: 1;
+}

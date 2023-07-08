@@ -1,0 +1,58 @@
+.form-wrp {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.sign-up-form {
+    width: 45%;
+    box-shadow: 8px -7px 14px -7px rgba(0,0,0,0.29);
+    border-radius: 10px;
+}
+
+.user-photo {
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+}
+
+.photo-wrp {
+    display: flex;
+    justify-content: center;
+}
+
+fieldset {
+    border: 0;
+}
+
+.photo-picker {
+    background-color:rgb(211, 211, 211);
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.photo-font {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+#photo {
+    display: none;
+}
+
+@media(max-width:7px) {
+}
+
+@media(max-width:768px) {
+    .sign-up-form {
+        width: 100%;
+    }
+}

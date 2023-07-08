@@ -1,0 +1,49 @@
+.send {
+    width: 55px;
+    border-radius: 50px;
+    height: 55px;
+    font-size: 32px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-top: 3px;
+    margin-left: 8px;
+    background-color: rgb(76, 143, 226);
+    color:white;
+    transition-duration: .3s;
+}
+
+.send:hover {
+    background-color: rgb(23, 112, 220);
+    color: black;
+    transition-duration: .3s;
+}
+
+.message-sender {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 100px;
+    padding:5px 0px;
+    margin-bottom: 10px;
+    padding-right: 10px;
+    word-break: break-all;
+}
+
+.partner-message {
+    color: white;
+    background-color: #3784e2c5;
+    border-radius: 5px 5px 5px 0px;
+}
+
+.user-message {
+    color: black;
+    background-color: #44dd56d6;
+    border-radius: 5px 5px 0px 5px;
+    align-self: flex-end;
+}
+
+.send-wrp {
+    display: flex;
+}
