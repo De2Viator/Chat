@@ -3,7 +3,8 @@ import './App.scss';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout/Layout';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/store';
 import { ProtectedRoute } from './routes/protectedRoutes';
 import { Auth } from './components/Auth/Auth';
 const Chat = lazy(() =>
@@ -33,22 +34,24 @@ const MessageList = lazy(() =>
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="auth" element={<Auth />} />
-              <Route path="signUp" element={<SignUp />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="home" element={<Home />} />
-                <Route path="chats" element={<Chat />}>
-                  <Route path=":partnerId" element={<MessageList />} />
-                </Route>
-              </Route>
-            </Route>
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                            <Route path="auth" element={<Auth />} />
+                            <Route path="signUp" element={<SignUp />} />
+                            <Route element={<ProtectedRoute />}>
+                                <Route path="home" element={<Home />} />
+                                <Route path="chats" element={<Chat />}>
+                                    <Route path=":partnerId" element={<MessageList />} />
+                                </Route>
+                            </Route>
+                        </Route>
+                    </Routes>
+                </Suspense>
+            </BrowserRouter>
+        </PersistGate>
     </Provider>
   );
 }

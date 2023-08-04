@@ -8,34 +8,39 @@
     height: calc(100vh - 68.5px);
     margin: 0;
     padding: 0;
+
+    &__chat-title {
+        padding-top: 50px;
+        color: white;
+        font-size: 50px;
+        margin:0px;
+    }
+
+    &__form {
+        margin-top: 50px;
+        background-color: #fff;
+        width: 40%;
+        padding-top: 30px;
+        border-radius: 15px;
+        &-wrp {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &__navigation {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 20px;
+    }
+
+    &__input {
+        width: 80%;
+    }
 }
 
-.auth__chat-title {
-    padding-top: 50px;
-    color: white;
-    font-size: 50px;
-    margin:0px;
-}
-
-.auth__form-wrp {
-    display: flex;
-    justify-content: center;
-}
-
-.auth__form {
-    margin-top: 50px;
-    background-color: #fff;
-    width: 40%;
-    padding-top: 30px;
-    border-radius: 15px;
-}
-
-.auth__navigation {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 20px;
-}
-
-.auth__input {
-    width: 80%;
+@media (max-width: 1020px) {
+    .auth__form {
+        width: 80%;
+    }
 }

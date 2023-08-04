@@ -12,6 +12,12 @@ module.exports = {
   resolve: {
     extensions: ['.jsx', '.js', '.tsx', '.ts'],
   },
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, './build'),
+    },
+    historyApiFallback: true,
+  },
   devtool: 'eval-source-map',
   module: {
     rules: [

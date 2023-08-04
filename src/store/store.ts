@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/es/storage';
-import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+
 import chatSlice, { ChatState } from './chats/chatSlice';
 import profileSlice, { AuthState } from './profile/profileSlice';
 import homeSlice, { HomeState } from './home/home.slice';
@@ -16,32 +17,26 @@ export interface StoreState {
   message: MessageState;
 }
 
-const userPersistConfig = {
-  key: 'user',
-  storage,
-  blacklist: ['userSearching'],
-};
-
-const persStore = {
-  key: 'root',
-  storage,
-  blacklist: ['user', 'chat', 'message'],
-};
-
 const rootReducer = combineReducers({
   auth: profileSlice,
   chat: chatSlice,
   home: homeSlice,
-  user: persistReducer(userPersistConfig, userSlice),
+  user: userSlice,
   message: messageSlice,
 });
 
-const persistReducers = persistReducer(persStore, rootReducer);
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'],
+};
+
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: persistReducers,
+  reducer: persistedReducer,
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk],
 });
 export const persistor = persistStore(store);
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

@@ -15,7 +15,7 @@ import {
   setAuthError,
   signIn as signInStore,
 } from '../../store/profile/profileSlice';
-import { Button } from '../Button/Button';
+import { Button } from '../UI/Button/Button';
 import { StoreState } from '../../store/store';
 import { registerUser } from '../../store/users/userSlice';
 
